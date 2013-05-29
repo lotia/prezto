@@ -12,3 +12,7 @@ fi
 
 # Customize to your needs...
 [[ -s $(brew --prefix)/etc/autojump.sh ]] && . $(brew --prefix)/etc/autojump.sh
+
+# include API keys, access tokens etc. that we don't wan to commit to public repos
+[[ -f ${HOME}/.cred_env_vars ]] && . ${HOME}/.cred_env_vars
+
