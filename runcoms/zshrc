@@ -16,3 +16,6 @@ fi
 # include API keys, access tokens etc. that we don't wan to commit to public repos
 [[ -f ${HOME}/.cred_env_vars ]] && . ${HOME}/.cred_env_vars
 
+# load in aliases
+[[ -f ${HOME}/.aliases ]] && . ${HOME}/.aliases
+
