@@ -42,11 +42,21 @@ typeset -gU cdpath fpath mailpath path
 
 # Set the list of directories that Zsh searches for programs.
 path=(
-  "$HOME"/bin
+  "${HOME}"/bin
   /usr/local/{bin,sbin}
   $(brew --prefix)/share/python
   $path
 )
+
+# Set some variables expected by packages. Harmless if packages aren't
+# present
+# define a download cache for pip. A bit os X centric at present
+export PIP_DOWNLOAD_CACHE=$HOME/Library/Caches/pip-downloads
+# Use distribute by default for virtualenvs
+export VIRTUALENV_DISTRIBUTE=true
+
+# define the GOPATH as required by golang
+export GOPATH=${HOME}/go
 
 #
 # Less
@@ -75,4 +85,3 @@ TMPPREFIX="${TMPDIR%/}/zsh"
 if [[ ! -d "$TMPPREFIX" ]]; then
   mkdir -p "$TMPPREFIX"
 fi
-
