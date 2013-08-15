@@ -29,7 +29,7 @@ if [[ -z "$LANG" ]]; then
   export LANG='en_US.UTF-8'
 fi
 
-# 
+#
 # Set some variables expected by packages. Harmless if packages aren't
 # present
 # define a download cache for pip. A bit os X centric at present
@@ -109,3 +109,8 @@ TMPPREFIX="${TMPDIR%/}/zsh"
 if [[ ! -d "$TMPPREFIX" ]]; then
   mkdir -p "$TMPPREFIX"
 fi
+
+export PUPPET3_DIR=${HOME}/development/puppet3
+[[ "${OSTYPE}" == darwin* ]] && export JAVA_HOME=$(/usr/libexec/java_home)
+[[ -f "${HOME}/.aws_util_creds" ]] && export AWS_CREDENTIAL_FILE="${HOME}/.aws_util_creds"
+
