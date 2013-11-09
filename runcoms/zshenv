@@ -59,14 +59,7 @@ path=(
 # Set the brew prefix if brew exists and add additional dirs to path
 if (( $+commands[brew] )); then
   brew_prefix=$(brew --prefix)
-
-  if [[ -f ${brew_prefix}/bin/python ]] ; then
-    path=(
-      ${brew_prefix}/share/python
-      $path
-    )
-  fi
-  if [[ -d ${brew_prefix}/share/npm ]] ; then
+    if [[ -d ${brew_prefix}/share/npm ]] ; then
     path=(
       ${brew_prefix}/share/npm/bin
       $path
