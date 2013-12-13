@@ -35,7 +35,6 @@ fi
 # define a download cache for pip. A bit os X centric at present
 export PIP_DOWNLOAD_CACHE=$HOME/Library/Caches/pip-downloads
 # Use distribute by default for virtualenvs
-export VIRTUALENV_DISTRIBUTE=true
 
 # define the GOPATH as required by golang
 export GOPATH=${HOME}/go
@@ -103,7 +102,6 @@ if [[ ! -d "$TMPPREFIX" ]]; then
   mkdir -p "$TMPPREFIX"
 fi
 
-export PUPPET3_DIR=${HOME}/development/puppet3
 [[ "${OSTYPE}" == darwin* ]] && export JAVA_HOME=$(/usr/libexec/java_home)
 [[ -f "${HOME}/.aws_util_creds" ]] && export AWS_CREDENTIAL_FILE="${HOME}/.aws_util_creds"
 
