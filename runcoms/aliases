@@ -1,0 +1,7 @@
+# Emacs aliases
+alias emacsclient="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -n"
+alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -nw"
+alias z="j"
+alias vim="mvim -v"
+alias julia="/Applications/Julia-0.2.0.app/Contents/Resources/julia/bin/julia"
+
