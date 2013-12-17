@@ -1,4 +1,3 @@
-# Emacs aliases
 alias emacsclient="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -n"
 alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -nw"
 alias z="j"
