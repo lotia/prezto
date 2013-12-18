@@ -19,3 +19,5 @@ fi
 # load in aliases
 [[ -f ${HOME}/.aliases ]] && . ${HOME}/.aliases
 
+echo "export PATH=${PATH}" >! ~/.bash_profile
+
