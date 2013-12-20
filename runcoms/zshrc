@@ -19,5 +19,13 @@ fi
 # load in aliases
 [[ -f ${HOME}/.aliases ]] && . ${HOME}/.aliases
 
+# set git user info if globally configured
+if [[ -f ${HOME}/.gitconfig ]] ; then
+    GIT_AUTHOR_NAME=$(git config user.name)
+    GIT_AUTHOR_EMAIL=$(git config user.email)
+    GIT_COMMITTER_NAME=$GIT_AUTHOR_NAME
+    GIT_COMMITTER_EMAIL=$GIT_AUTHOR_EMAIL
+fi
+
 echo "export PATH=${PATH}" >! ~/.bash_profile
 
