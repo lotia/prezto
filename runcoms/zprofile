@@ -113,10 +113,15 @@ if (( $+commands[go] )); then
   )
 fi
 
+# Setup for AtomicScala
+# Add code directory to CLASSPATH
+if [[ -d "${HOME}/AtomicScala/code" ]] ; then
+    export CLASSPATH="${HOME}/AtomicScala/code:${CLASSPATH}"
+fi
+
 # Set more directories that Zsh searches for programs.
 path=(
   ${HOME}/bin
   ${GOPATH}/bin
   $path
 )
-
