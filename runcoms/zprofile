@@ -102,26 +102,30 @@ if (( $+commands[brew] )); then
   fi
 fi
 
-# define the GOPATH as required by golang
-export GOPATH=${HOME}/go
 # also define GOROOT if go is installed
 if (( $+commands[go] )); then
+  # define the GOPATH as required by golang
+  export GOPATH=${HOME}/go
   export GOROOT=$(go env GOROOT)
   path=(
     ${GOROOT}/bin
+    ${GOPATH}/bin
     $path
   )
 fi
 
-# Setup for AtomicScala
-# Add code directory to CLASSPATH
-if [[ -d "${HOME}/AtomicScala/code" ]] ; then
-    export CLASSPATH="${HOME}/AtomicScala/code:${CLASSPATH}"
+# Setup paths for haskell-platform if installed
+if (( $+commands[ghci] )); then
+  # define cabal location and add bin dir to path
+  export CABALPATH="${HOME}/.cabal"
+  path=(
+    ${CABALPATH}/bin
+    $path
+  )
 fi
 
 # Set more directories that Zsh searches for programs.
 path=(
   ${HOME}/bin
-  ${GOPATH}/bin
   $path
 )
