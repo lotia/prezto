@@ -99,6 +99,7 @@ if (( $+commands[brew] )); then
       ${brew_prefix}/share/npm/bin
       $path
     )
+    export BYOBU_PREFIX=${brew_prefix}
   fi
 fi
 
