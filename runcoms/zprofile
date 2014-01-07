@@ -113,6 +113,11 @@ if (( $+commands[go] )); then
     ${GOPATH}/bin
     $path
   )
+  if (( $+commands[launchctl] )); then
+    launchctl setenv GOPATH ${GOPATH}
+    launchctl setenv GOROOT ${GOROOT}
+  fi
+
 fi
 
 # Setup paths for haskell-platform if installed
