@@ -117,7 +117,6 @@ if (( $+commands[go] )); then
     launchctl setenv GOPATH ${GOPATH}
     launchctl setenv GOROOT ${GOROOT}
   fi
-
 fi
 
 # Setup paths for haskell-platform if installed
