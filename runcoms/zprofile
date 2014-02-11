@@ -17,8 +17,8 @@ fi
 # Editors
 #
 
-export EDITOR='nano'
-export VISUAL='nano'
+export EDITOR='vim'
+export VISUAL='vim'
 export PAGER='less'
 
 #
@@ -135,6 +135,11 @@ if (( $+commands[ghci] )); then
     ${CABALPATH}/bin
     $path
   )
+fi
+
+# Set JAVA_HOME if Java is installed
+if [[ -x /usr/libexec/java_home ]]; then
+  export JAVA_HOME=$(/usr/libexec/java_home)
 fi
 
 # Set more directories that Zsh searches for programs.
