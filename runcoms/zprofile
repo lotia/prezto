@@ -145,9 +145,9 @@ fi
 # Setup cask http://cask.github.io if installed
 if [[ -d ${HOME}/.cask ]]; then
   path=(
-    ${HOME}/.cask
+    ${HOME}/.cask/bin
+    $path
   )
-  source ${HOME}/.cask/etc/cask_completion.zsh
 fi
 
 # Set more directories that Zsh searches for programs.
