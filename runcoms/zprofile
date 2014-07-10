@@ -107,15 +107,19 @@ fi
 if (( $+commands[go] )); then
   # define the GOPATH as required by golang
   export GOPATH=${HOME}/go
-  export GOROOT=$(go env GOROOT)
   path=(
-    ${GOROOT}/bin
     ${GOPATH}/bin
     $path
   )
   if (( $+commands[launchctl] )); then
     launchctl setenv GOPATH ${GOPATH}
-    launchctl setenv GOROOT ${GOROOT}
+  fi
+
+  if [[ -d ${brew_prefix}/opt/go ]]; then
+    path=(
+      $path
+      ${brew_prefix}/opt/go/libexec/bin
+    )
   fi
 fi
 
