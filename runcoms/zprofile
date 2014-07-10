@@ -150,6 +150,11 @@ if [[ -d ${HOME}/.cask ]]; then
   )
 fi
 
+# OPAM configuration if opam is set up
+if [[ -d ${HOME}/.opam ]] ; then
+    . /Users/lotia/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+fi
+
 # Set more directories that Zsh searches for programs.
 path=(
   ${HOME}/bin
