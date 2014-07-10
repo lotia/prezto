@@ -1,4 +1,4 @@
-alias emacsclient="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -n"
+alias emacsclient="/Applications/Emacs.app/Contents/MacOS/bin-x86_64-10.9/emacsclient -n"
 alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -nw"
 alias z="j"
 alias vim="mvim -v"
