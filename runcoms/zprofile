@@ -125,9 +125,11 @@ fi
 
 # set up GROOVY_HOME if installed
 if (( $+commands[groovy] )); then
-  export GROOVY_HOME=${brew_prefix}/opt/groovy/libexec
-  if (( $+commands[launchctl] )); then
-    launchctl setenv GROOVY_HOME ${GROOVY_HOME}
+  if [[ -d ${brew_prefix}/opt/groovy ]] ; then
+    export GROOVY_HOME=${brew_prefix}/opt/groovy/libexec
+    if (( $+commands[launchctl] )); then
+      launchctl setenv GROOVY_HOME ${GROOVY_HOME}
+    fi
   fi
 fi
 
