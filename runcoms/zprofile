@@ -163,6 +163,7 @@ fi
 
 # Set more directories that Zsh searches for programs.
 path=(
+  .cabal-sandbox/bin
   ${HOME}/bin
   $path
 )
