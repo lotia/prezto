@@ -57,8 +57,9 @@ path=(
 export LESS='-F -g -i -M -R -S -w -X -z-4'
 
 # Set the Less input preprocessor.
-if (( $+commands[lesspipe.sh] )); then
-  export LESSOPEN='| /usr/bin/env lesspipe.sh %s 2>&-'
+# Try both `lesspipe` and `lesspipe.sh` as either might exist on a system.
+if (( $#commands[(i)lesspipe(|.sh)] )); then
+  export LESSOPEN="| /usr/bin/env $commands[(i)lesspipe(|.sh)] %s 2>&-"
 fi
 
 #
@@ -74,96 +75,3 @@ TMPPREFIX="${TMPDIR%/}/zsh"
 if [[ ! -d "$TMPPREFIX" ]]; then
   mkdir -p "$TMPPREFIX"
 fi
-
-#
-# Local customisations
-#
-
-#
-# Set some variables expected by packages. Harmless if packages aren't
-# present
-#
-
-# define a download cache for pip. A bit os X centric at present
-export PIP_DOWNLOAD_CACHE=$HOME/Library/Caches/pip-downloads
-
-#
-# Local path customisations
-#
-
-# Set the brew prefix if brew exists and add additional dirs to path
-if (( $+commands[brew] )); then
-  brew_prefix=$(brew --prefix)
-    if [[ -d ${brew_prefix}/share/npm ]] ; then
-    path=(
-      ${brew_prefix}/share/npm/bin
-      $path
-    )
-    export BYOBU_PREFIX=${brew_prefix}
-  fi
-fi
-
-# also define GOROOT if go is installed
-if (( $+commands[go] )); then
-  # define the GOPATH as required by golang
-  export GOPATH=${HOME}/go
-  path=(
-    ${GOPATH}/bin
-    $path
-  )
-  if (( $+commands[launchctl] )); then
-    launchctl setenv GOPATH ${GOPATH}
-  fi
-
-  if [[ -d ${brew_prefix}/opt/go ]]; then
-    path=(
-      $path
-      ${brew_prefix}/opt/go/libexec/bin
-    )
-  fi
-fi
-
-# set up GROOVY_HOME if installed
-if (( $+commands[groovy] )); then
-  if [[ -d ${brew_prefix}/opt/groovy ]] ; then
-    export GROOVY_HOME=${brew_prefix}/opt/groovy/libexec
-    if (( $+commands[launchctl] )); then
-      launchctl setenv GROOVY_HOME ${GROOVY_HOME}
-    fi
-  fi
-fi
-
-# Setup paths for haskell-platform if installed
-if (( $+commands[ghci] )); then
-  # define cabal location and add bin dir to path
-  export CABALPATH="${HOME}/.cabal"
-  path=(
-    ${CABALPATH}/bin
-    $path
-  )
-fi
-
-# Set JAVA_HOME if Java is installed
-if [[ -x /usr/libexec/java_home ]]; then
-  export JAVA_HOME=$(/usr/libexec/java_home)
-fi
-
-# Setup cask http://cask.github.io if installed
-if [[ -d ${HOME}/.cask ]]; then
-  path=(
-    ${HOME}/.cask/bin
-    $path
-  )
-fi
-
-# OPAM configuration if opam is set up
-if [[ -d ${HOME}/.opam ]] ; then
-    . /Users/lotia/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
-fi
-
-# Set more directories that Zsh searches for programs.
-path=(
-  .cabal-sandbox/bin
-  ${HOME}/bin
-  $path
-)
