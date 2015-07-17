@@ -85,9 +85,6 @@ fi
 # present
 #
 
-# define a download cache for pip. A bit os X centric at present
-export PIP_DOWNLOAD_CACHE=$HOME/Library/Caches/pip-downloads
-
 #
 # Local path customisations
 #
@@ -95,12 +92,31 @@ export PIP_DOWNLOAD_CACHE=$HOME/Library/Caches/pip-downloads
 # Set the brew prefix if brew exists and add additional dirs to path
 if (( $+commands[brew] )); then
   brew_prefix=$(brew --prefix)
-    if [[ -d ${brew_prefix}/share/npm ]] ; then
+
+  if [[ -d ${brew_prefix}/share/npm ]] ; then
     path=(
       ${brew_prefix}/share/npm/bin
       $path
     )
-    export BYOBU_PREFIX=${brew_prefix}
+  export BYOBU_PREFIX=${brew_prefix}
+  fi
+
+  # set up GROOVY_HOME if installed
+  if (( $+commands[groovy] )); then
+    if [[ -d ${brew_prefix}/opt/groovy ]] ; then
+      export GROOVY_HOME=${brew_prefix}/opt/groovy/libexec
+      if (( $+commands[launchctl] )); then
+        launchctl setenv GROOVY_HOME ${GROOVY_HOME}
+      fi
+    fi
+  fi
+
+  # Add go libexec dir if installed
+  if [[ -f ${brew_prefix}/bin/go ]]; then
+    path=(
+      ${brew_prefix}/opt/go/libexec/bin
+      $path
+    )
   fi
 fi
 
@@ -114,23 +130,6 @@ if (( $+commands[go] )); then
   )
   if (( $+commands[launchctl] )); then
     launchctl setenv GOPATH ${GOPATH}
-  fi
-
-  if [[ -d ${brew_prefix}/opt/go ]]; then
-    path=(
-      $path
-      ${brew_prefix}/opt/go/libexec/bin
-    )
-  fi
-fi
-
-# set up GROOVY_HOME if installed
-if (( $+commands[groovy] )); then
-  if [[ -d ${brew_prefix}/opt/groovy ]] ; then
-    export GROOVY_HOME=${brew_prefix}/opt/groovy/libexec
-    if (( $+commands[launchctl] )); then
-      launchctl setenv GROOVY_HOME ${GROOVY_HOME}
-    fi
   fi
 fi
 
@@ -157,11 +156,6 @@ if [[ -d ${HOME}/.cask ]]; then
   )
 fi
 
-# OPAM configuration if opam is set up
-if [[ -d ${HOME}/.opam ]] ; then
-    . ${HOME}/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
-fi
-
 # Set more directories that Zsh searches for programs.
 path=(
   .cabal-sandbox/bin
@@ -171,5 +165,21 @@ path=(
 
 # perlbrew configuration if perlbrew is set up
 if [[ -d ${HOME}/perl5/perlbrew ]] ; then
-    . ${HOME}/perl5/perlbrew/etc/bashrc
+  . ${HOME}/perl5/perlbrew/etc/bashrc
 fi
+
+# configure OPAM if it is set up. OPAM configuration documented at
+# https://github.com/realworldocaml/book/wiki/Installation-Instructions
+if [[ -f ${HOME}/.opam/opam-init/init.zsh ]] ; then
+  . /Users/lotia/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+fi
+
+# configuration required for simba bigquery ODBC client
+# if [[ -d /opt/simba/bigqueryodbc/lib/universal ]]; then
+#   export LD_LIBRARY_PATH="/opt/simba/bigqueryodbc/lib/universal:${LD_LIBRARY_PATH}"
+#   launchctl setenv LD_LIBRARY_PATH ${LD_LIBRARY_PATH}
+# fi
+# if [[ -d '/Library/Application Support/iODBC/bin' ]]; then
+#   export DYLD_LIBRARY_PATH="/Library/Application Support/iODBC/bin:${DYLD_LIBRARY_PATH}"
+#   launchctl setenv DYLD_LIBRARY_PATH ${DYLD_LIBRARY_PATH}
+# fi
